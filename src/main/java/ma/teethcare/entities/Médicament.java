@@ -1,97 +1,40 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
-import javax.persistence.*;
-import java.util.Objects;
-
-@Entity
-@Table(name = "medicament")
-public class Médicament {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idMedicament;
-
-    @Column(name = "nom")
+public class Medicament {
+    private Long id;
     private String nom;
-
-    @Column(name = "laboratoire")
-    private String laboratoire;
-
-    @Column(name = "type")
     private String type;
+    private String forme; // COMPRIME, SIROP, GELULE, POMMADE, INJECTABLE, SPRAY
+    private Double prix;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "forme")
-    private FormeMedicament forme;
+    // Relations
+    private List<Prescription> prescriptions;
 
-    @Column(name = "remboursable")
-    private Boolean remboursable;
+    public Medicament() {}
 
-    @Column(name = "prix_unitaire")
-    private Double prixUnitaire;
-
-    @Column(name = "description", length = 1000)
-    private String description;
-
-    public Médicament() {}
-
-    public Médicament(String nom, String laboratoire, String type, FormeMedicament forme, Boolean remboursable, Double prixUnitaire, String description) {
+    public Medicament(String nom, String type, String forme, Double prix) {
         this.nom = nom;
-        this.laboratoire = laboratoire;
         this.type = type;
         this.forme = forme;
-        this.remboursable = remboursable;
-        this.prixUnitaire = prixUnitaire;
-        this.description = description;
+        this.prix = prix;
     }
 
-    public Long getIdMedicament() { return idMedicament; }
-    public void setIdMedicament(Long idMedicament) { this.idMedicament = idMedicament; }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
 
-    public String getLaboratoire() { return laboratoire; }
-    public void setLaboratoire(String laboratoire) { this.laboratoire = laboratoire; }
-
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
 
-    public FormeMedicament getForme() { return forme; }
-    public void setForme(FormeMedicament forme) { this.forme = forme; }
+    public String getForme() { return forme; }
+    public void setForme(String forme) { this.forme = forme; }
 
-    public Boolean getRemboursable() { return remboursable; }
-    public void setRemboursable(Boolean remboursable) { this.remboursable = remboursable; }
+    public Double getPrix() { return prix; }
+    public void setPrix(Double prix) { this.prix = prix; }
 
-    public Double getPrixUnitaire() { return prixUnitaire; }
-    public void setPrixUnitaire(Double prixUnitaire) { this.prixUnitaire = prixUnitaire; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Médicament that = (Médicament) o;
-        return Objects.equals(idMedicament, that.idMedicament);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idMedicament);
-    }
-
-    @Override
-    public String toString() {
-        return "Médicament{" +
-                "idMedicament=" + idMedicament +
-                ", nom='" + nom + '\'' +
-                ", laboratoire='" + laboratoire + '\'' +
-                ", type='" + type + '\'' +
-                ", forme=" + forme +
-                ", remboursable=" + remboursable +
-                ", prixUnitaire=" + prixUnitaire +
-                ", description='" + description + '\'' +
-                '}';
-    }
+    public List<Prescription> getPrescriptions() { return prescriptions; }
+    public void setPrescriptions(List<Prescription> prescriptions) { this.prescriptions = prescriptions; }
 }

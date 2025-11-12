@@ -1,65 +1,39 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
-import javax.persistence.*;
-import java.util.Objects;
+import java.util.List;
 
-@Entity
-@Table(name = "antecedents")
-public class Antécédents {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAntecedent;
+public class Antecedents {
+    private Long id;
+    private String allergies;
+    private String maladiesChroniques;
+    private String traitementsEnCours;
+    private String antecedentsFamiliaux;
 
-    @Column(name = "nom")
-    private String nom;
+    // Relations
+    private Patient patient;
 
-    @Column(name = "categorie")
-    private String catégorie;
+    public Antecedents() {}
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "niveau_risque")
-    private NiveauRisque niveauDeRisque;
-
-    public Antécédents() {}
-
-    public Antécédents(String nom, String catégorie, NiveauRisque niveauDeRisque) {
-        this.nom = nom;
-        this.catégorie = catégorie;
-        this.niveauDeRisque = niveauDeRisque;
+    public Antecedents(Patient patient) {
+        this.patient = patient;
     }
 
-    public Long getIdAntecedent() { return idAntecedent; }
-    public void setIdAntecedent(Long idAntecedent) { this.idAntecedent = idAntecedent; }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getNom() { return nom; }
-    public void setNom(String nom) { this.nom = nom; }
+    public String getAllergies() { return allergies; }
+    public void setAllergies(String allergies) { this.allergies = allergies; }
 
-    public String getCatégorie() { return catégorie; }
-    public void setCatégorie(String catégorie) { this.catégorie = catégorie; }
+    public String getMaladiesChroniques() { return maladiesChroniques; }
+    public void setMaladiesChroniques(String maladiesChroniques) { this.maladiesChroniques = maladiesChroniques; }
 
-    public NiveauRisque getNiveauDeRisque() { return niveauDeRisque; }
-    public void setNiveauDeRisque(NiveauRisque niveauDeRisque) { this.niveauDeRisque = niveauDeRisque; }
+    public String getTraitementsEnCours() { return traitementsEnCours; }
+    public void setTraitementsEnCours(String traitementsEnCours) { this.traitementsEnCours = traitementsEnCours; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Antécédents that = (Antécédents) o;
-        return Objects.equals(idAntecedent, that.idAntecedent);
-    }
+    public String getAntecedentsFamiliaux() { return antecedentsFamiliaux; }
+    public void setAntecedentsFamiliaux(String antecedentsFamiliaux) { this.antecedentsFamiliaux = antecedentsFamiliaux; }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idAntecedent);
-    }
-
-    @Override
-    public String toString() {
-        return "Antécédents{" +
-                "idAntecedent=" + idAntecedent +
-                ", nom='" + nom + '\'' +
-                ", catégorie='" + catégorie + '\'' +
-                ", niveauDeRisque=" + niveauDeRisque +
-                '}';
-    }
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
 }

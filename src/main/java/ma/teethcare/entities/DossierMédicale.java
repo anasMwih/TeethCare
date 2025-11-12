@@ -1,49 +1,45 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.List;
 
-@Entity
-@Table(name = "dossier_medicale")
-public class DossierMédicale {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idDM;
+public class DossierMedical {
+    private Long id;
+    private LocalDate dateCreation;
+    private String observations;
 
-    @Column(name = "date_creation")
-    private LocalDate dateDeCréation;
+    // Relations
+    private Patient patient;
+    private List<Consultation> consultations;
+    private List<Ordonnance> ordonnances;
+    private List<Certificat> certificats;
 
-    public DossierMédicale() {}
+    public DossierMedical() {}
 
-    public DossierMédicale(LocalDate dateDeCréation) {
-        this.dateDeCréation = dateDeCréation;
+    public DossierMedical(Patient patient, LocalDate dateCreation) {
+        this.patient = patient;
+        this.dateCreation = dateCreation;
     }
 
-    public Long getIdDM() { return idDM; }
-    public void setIdDM(Long idDM) { this.idDM = idDM; }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public LocalDate getDateDeCréation() { return dateDeCréation; }
-    public void setDateDeCréation(LocalDate dateDeCréation) { this.dateDeCréation = dateDeCréation; }
+    public LocalDate getDateCreation() { return dateCreation; }
+    public void setDateCreation(LocalDate dateCreation) { this.dateCreation = dateCreation; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DossierMédicale that = (DossierMédicale) o;
-        return Objects.equals(idDM, that.idDM);
-    }
+    public String getObservations() { return observations; }
+    public void setObservations(String observations) { this.observations = observations; }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idDM);
-    }
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
 
-    @Override
-    public String toString() {
-        return "DossierMédicale{" +
-                "idDM=" + idDM +
-                ", dateDeCréation=" + dateDeCréation +
-                '}';
-    }
+    public List<Consultation> getConsultations() { return consultations; }
+    public void setConsultations(List<Consultation> consultations) { this.consultations = consultations; }
+
+    public List<Ordonnance> getOrdonnances() { return ordonnances; }
+    public void setOrdonnances(List<Ordonnance> ordonnances) { this.ordonnances = ordonnances; }
+
+    public List<Certificat> getCertificats() { return certificats; }
+    public void setCertificats(List<Certificat> certificats) { this.certificats = certificats; }
 }

@@ -1,57 +1,49 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
 
-@Entity
-@Table(name = "intervention_medecin")
-public class InterventionMédecin {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idIntervention;
-
-    @Column(name = "date_intervention")
+public class InterventionMedecin {
+    private Long id;
     private LocalDate dateIntervention;
+    private String typeIntervention;
+    private String description;
+    private Integer duree; // en minutes
+    private Double cout;
 
-    @Column(name = "num_dent")
-    private Integer numDent;
+    // Relations
+    private Consultation consultation;
+    private Medecin medecin;
 
-    public InterventionMédecin() {}
+    public InterventionMedecin() {}
 
-    public InterventionMédecin(LocalDate dateIntervention, Integer numDent) {
+    public InterventionMedecin(Consultation consultation, String typeIntervention, LocalDate dateIntervention) {
+        this.consultation = consultation;
+        this.typeIntervention = typeIntervention;
         this.dateIntervention = dateIntervention;
-        this.numDent = numDent;
     }
 
-    public Long getIdIntervention() { return idIntervention; }
-    public void setIdIntervention(Long idIntervention) { this.idIntervention = idIntervention; }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public LocalDate getDateIntervention() { return dateIntervention; }
     public void setDateIntervention(LocalDate dateIntervention) { this.dateIntervention = dateIntervention; }
 
-    public Integer getNumDent() { return numDent; }
-    public void setNumDent(Integer numDent) { this.numDent = numDent; }
+    public String getTypeIntervention() { return typeIntervention; }
+    public void setTypeIntervention(String typeIntervention) { this.typeIntervention = typeIntervention; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InterventionMédecin that = (InterventionMédecin) o;
-        return Objects.equals(idIntervention, that.idIntervention);
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idIntervention);
-    }
+    public Integer getDuree() { return duree; }
+    public void setDuree(Integer duree) { this.duree = duree; }
 
-    @Override
-    public String toString() {
-        return "InterventionMédecin{" +
-                "idIntervention=" + idIntervention +
-                ", dateIntervention=" + dateIntervention +
-                ", numDent=" + numDent +
-                '}';
-    }
+    public Double getCout() { return cout; }
+    public void setCout(Double cout) { this.cout = cout; }
+
+    public Consultation getConsultation() { return consultation; }
+    public void setConsultation(Consultation consultation) { this.consultation = consultation; }
+
+    public Medecin getMedecin() { return medecin; }
+    public void setMedecin(Medecin medecin) { this.medecin = medecin; }
 }

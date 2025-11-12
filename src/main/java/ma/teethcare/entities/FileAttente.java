@@ -1,58 +1,43 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Objects;
+import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "file_attente")
 public class FileAttente {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idFileAttente;
+    private Long id;
+    private LocalDateTime dateArrivee;
+    private Integer position;
+    private String statut; // EN_ATTENTE, EN_COURS, TERMINE, ANNULE
+    private String priorite; // NORMAL, URGENT
 
-    @Column(name = "date_file")
-    private LocalDate dateFile;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "statut")
-    private StatutFileAttente statut;
+    // Relations
+    private Patient patient;
 
     public FileAttente() {}
 
-    public FileAttente(LocalDate dateFile, StatutFileAttente statut) {
-        this.dateFile = dateFile;
-        this.statut = statut;
+    public FileAttente(Patient patient, LocalDateTime dateArrivee, Integer position) {
+        this.patient = patient;
+        this.dateArrivee = dateArrivee;
+        this.position = position;
+        this.statut = "EN_ATTENTE";
+        this.priorite = "NORMAL";
     }
 
-    public Long getIdFileAttente() { return idFileAttente; }
-    public void setIdFileAttente(Long idFileAttente) { this.idFileAttente = idFileAttente; }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public LocalDate getDateFile() { return dateFile; }
-    public void setDateFile(LocalDate dateFile) { this.dateFile = dateFile; }
+    public LocalDateTime getDateArrivee() { return dateArrivee; }
+    public void setDateArrivee(LocalDateTime dateArrivee) { this.dateArrivee = dateArrivee; }
 
-    public StatutFileAttente getStatut() { return statut; }
-    public void setStatut(StatutFileAttente statut) { this.statut = statut; }
+    public Integer getPosition() { return position; }
+    public void setPosition(Integer position) { this.position = position; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FileAttente that = (FileAttente) o;
-        return Objects.equals(idFileAttente, that.idFileAttente);
-    }
+    public String getStatut() { return statut; }
+    public void setStatut(String statut) { this.statut = statut; }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idFileAttente);
-    }
+    public String getPriorite() { return priorite; }
+    public void setPriorite(String priorite) { this.priorite = priorite; }
 
-    @Override
-    public String toString() {
-        return "FileAttente{" +
-                "idFileAttente=" + idFileAttente +
-                ", dateFile=" + dateFile +
-                ", statut=" + statut +
-                '}';
-    }
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
 }
