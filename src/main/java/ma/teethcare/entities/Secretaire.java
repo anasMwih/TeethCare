@@ -9,4 +9,7 @@ import lombok.*;
 public class Secretaire extends Staff {
     private String numCNSS;
     private Double commission;
+
+    // Secretaire hérite de Staff
+
 }

@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Admin extends Staff {
-    // Admin hérite de Staff
-
+public class Jour {
+    private String nomJour;
+    private boolean disponible;
 }

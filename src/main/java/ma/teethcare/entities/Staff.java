@@ -12,4 +12,9 @@ public class Staff extends Utilisateur {
     private Double prime;
     private LocalDate dateRecrutement;
     private int soldeConge;
+
+    // Staff hérite de Utilisateur
+    // Staff appartient à un CabinetMedicale
+    private CabinetMedicale cabinetMedicale;
+
 }

@@ -12,4 +12,8 @@ public class Revenues {
     private String description;
     private Double montant;
     private LocalDateTime date;
+
+    // Revenues appartient à un seul CabinetMedicale
+    private CabinetMedicale cabinetMedicale;
+
 }

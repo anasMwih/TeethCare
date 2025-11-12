@@ -13,4 +13,8 @@ public class Statistiques {
     private Enum categorie;
     private Double chiffre;
     private LocalDate dateCalcul;
+
+    // Statistiques liées à un CabinetMedicale
+    private CabinetMedicale cabinetMedicale;
+
 }
