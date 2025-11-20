@@ -1,22 +1,36 @@
-package ma.teethcare.modules.patient.api;
+package ma.dentalTech.repository.modules.patient.api;
 
-import ma.teethcare.common.CrudRepository;
-import ma.teethcare.entities.Patient;
+import ma.dentalTech.entities.patient.Patient;
+import ma.dentalTech.repository.common.CrudRepository;
 import java.util.List;
 import java.util.Optional;
 
 public interface PatientRepository extends CrudRepository<Patient, Long> {
 
-    // === RECHERCHES SPÉCIFIQUES PATIENT ===
+    // Recherche de patients par nom
     List<Patient> findByNom(String nom);
+
+    // Recherche de patients par prénom
     List<Patient> findByPrenom(String prenom);
-    List<Patient> findByNomComplet(String nom, String prenom);
-    List<Patient> findByTelephone(String telephone);
-    List<Patient> findByEmail(String email);
+
+    // Recherche de patients par téléphone
+    Optional<Patient> findByTelephone(String telephone);
+
+    // Recherche de patients par CIN
+    Optional<Patient> findByCin(String cin);
+
+    // Recherche de patients par assurance
     List<Patient> findByAssurance(String assurance);
 
-    // === STATISTIQUES ===
-    List<Patient> findPatientsRecents(int jours);
-    Optional<Patient> findByTelephoneExact(String telephone);
-    boolean existsByEmail(String email);
+    // Recherche combinée nom et prénom
+    List<Patient> findByNomAndPrenom(String nom, String prenom);
+
+    // Compter le nombre total de patients
+    long count();
+
+    // Vérifier si un patient existe par CIN
+    boolean existsByCin(String cin);
+
+    // Vérifier si un patient existe par téléphone
+    boolean existsByTelephone(String telephone);
 }

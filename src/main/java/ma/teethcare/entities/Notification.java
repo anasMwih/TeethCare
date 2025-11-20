@@ -16,4 +16,8 @@ public class Notification {
     private LocalTime time;
     private Enum type;
     private Enum priorité;
+
+    // Notification appartient à un utilisateur
+    private Utilisateur utilisateur;
+
 }

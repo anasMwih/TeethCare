@@ -10,4 +10,10 @@ import java.util.List;
 public class AgendaMensuel {
     private Enum mois;
     private List<Jour> joursNonDisponible;
+
+
+    // AgendaMensuel appartient à un Médecin
+    private Medecin medecin;
+
+
 }
