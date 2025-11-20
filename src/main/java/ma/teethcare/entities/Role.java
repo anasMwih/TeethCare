@@ -15,4 +15,5 @@ public class Role {
     // Role associé à plusieurs utilisateurs
     private List<Utilisateur> utilisateurs;
 
+
 }
