@@ -1,56 +1,63 @@
-package ma.dentalTech.repository.modules.facture.api;
+package ma.teethcare.repository.modules.facture.api;
 
-import ma.dentalTech.entities.Facture;
-import ma.dentalTech.entities.Patient;
-import ma.dentalTech.entities.Consultation;
-import ma.dentalTech.repository.common.CrudRepository;
+import ma.teethcare.entities.Consultation;
+import ma.teethcare.entities.Facture;
+import ma.teethcare.entities.Patient;
+import ma.teethcare.repository.common.CrudRepository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface FactureRepository extends CrudRepository<Facture, Long> {
 
-    // Recherche des factures par patient (relation Facture-Patient)
-    List<Facture> findByPatient(Patient patient);
-
-    // Recherche des factures par patient ID
-    List<Facture> findByPatientId(Long patientId);
-
-    // Recherche des factures par consultation (relation Facture-Consultation)
     Optional<Facture> findByConsultation(Consultation consultation);
-
-    // Recherche des factures par consultation ID
     Optional<Facture> findByConsultationId(Long consultationId);
 
-    // Recherche des factures par statut de paiement
-    List<Facture> findByStatutPaiement(String statutPaiement);
+    List<Facture> findByPatient(Patient patient);
+    List<Facture> findByPatientId(Long patientId);
 
-    // Recherche des factures impayées
-    List<Facture> findByStatutPaiementNot(String statutPaiement);
+    List<Facture> findByStatut(String statut);
 
-    // Recherche des factures par date
-    List<Facture> findByDateFacture(String date);
+    List<Facture> findByDateFacture(LocalDate date);
+    List<Facture> findByDateFactureBetween(LocalDateTime start, LocalDateTime end);
 
-    // Recherche des factures par montant supérieur à
-    List<Facture> findByMontantGreaterThan(Double montant);
+    List<Facture> findByNumeroFacture(String numero);
+    List<Facture> findByNumeroFactureContaining(String keyword);
 
-    // Recherche des factures par montant inférieur à
-    List<Facture> findByMontantLessThan(Double montant);
+    List<Facture> findByMontantTotalBetween(Double min, Double max);
+    List<Facture> findByResteAPayerGreaterThan(Double montant);
+    List<Facture> findByResteAPayerEquals(Double montant);
 
-    // Facture la plus récente d'un patient
-    Optional<Facture> findTopByPatientIdOrderByDateFactureDesc(Long patientId);
+    boolean existsById(Long id);
+    boolean existsByConsultationId(Long consultationId);
+    boolean existsByNumeroFacture(String numeroFacture);
 
-    // Compter le nombre de factures par patient
+    long count();
+    long countByStatut(String statut);
     long countByPatientId(Long patientId);
 
-    // Compter le nombre de factures par statut
-    long countByStatutPaiement(String statutPaiement);
+    List<Facture> findPage(int limit, int offset);
 
-    // Somme des montants des factures par patient
-    Double sumMontantByPatientId(Long patientId);
+    // ---- Statistiques financières ----
+    Double sumMontantTotal();
+    Double sumMontantTotalByStatut(String statut);
+    Double sumMontantTotalByPatientId(Long patientId);
+    Double sumMontantTotalByDate(LocalDate date);
 
-    // Vérifier si une facture existe pour une consultation
-    boolean existsByConsultationId(Long consultationId);
+    Double sumMontantPaye();
+    Double sumMontantPayeByStatut(String statut);
 
-    // Vérifier si un patient a des factures impayées
-    boolean existsByPatientIdAndStatutPaiementNot(Long patientId, String statutPaiement);
+    Double sumResteAPayer();
+    Double sumResteAPayerByPatientId(Long patientId);
+
+    // ---- Méthodes de mise à jour ----
+    void updateStatut(Long factureId, String statut);
+    void updateMontantPaye(Long factureId, Double montantPaye);
+    void updateResteAPayer(Long factureId, Double resteAPayer);
+
+    // ---- Recherche avancée ----
+    List<Facture> searchByPatientNomPrenom(String keyword);
+    List<Facture> findEnRetard(int joursRetard);
 }

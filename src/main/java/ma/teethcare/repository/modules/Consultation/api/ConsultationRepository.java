@@ -1,50 +1,53 @@
-package ma.dentalTech.repository.modules.dossierMedical.api;
+package ma.teethcare.repository.modules.consultation.api;
 
-import ma.dentalTech.entities.Consultation;
-import ma.dentalTech.entities.Patient;
-import ma.dentalTech.entities.Medecin;
-import ma.dentalTech.repository.common.CrudRepository;
+import ma.teethcare.entities.Consultation;
+import ma.teethcare.entities.DossierMedical;
+import ma.teethcare.entities.Facture;
+import ma.teethcare.entities.InterventionMedecin;
+import ma.teethcare.entities.Patient;
+import ma.teethcare.entities.Prescription;
+import ma.teethcare.repository.common.CrudRepository;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public interface ConsultationRepository extends CrudRepository<Consultation, Long> {
 
-    // Recherche des consultations par patient (relation Consultation-Patient)
     List<Consultation> findByPatient(Patient patient);
-
-    // Recherche des consultations par patient ID
     List<Consultation> findByPatientId(Long patientId);
 
-    // Recherche des consultations par médecin (relation Consultation-Médecin)
-    List<Consultation> findByMedecin(Medecin medecin);
+    List<Consultation> findByDossierMedical(DossierMedical dossier);
+    List<Consultation> findByDossierMedicalId(Long dossierId);
 
-    // Recherche des consultations par médecin ID
-    List<Consultation> findByMedecinId(Long medecinId);
+    List<Consultation> findByDate(LocalDate date);
+    List<Consultation> findByDateBetween(LocalDate start, LocalDate end);
 
-    // Recherche des consultations avec ordonnances (relation Consultation-Ordonnance)
-    List<Consultation> findByOrdonnanceIsNotNull();
+    List<Consultation> findByPrixBetween(Double min, Double max);
 
-    // Recherche des consultations par date
-    List<Consultation> findByDateConsultation(String date);
+    List<Consultation> findBySymptomesContaining(String keyword);
+    List<Consultation> findByDiagnosticContaining(String keyword);
+    List<Consultation> findByTraitementContaining(String keyword);
 
-    // Recherche des consultations par type
-    List<Consultation> findByTypeConsultation(String type);
+    Optional<Facture> getFactureOfConsultation(Long consultationId);
 
-    // Recherche des consultations par statut
-    List<Consultation> findByStatut(String statut);
+    boolean existsById(Long id);
+    long count();
+    List<Consultation> findPage(int limit, int offset);
 
-    // Consultation la plus récente d'un patient
-    Optional<Consultation> findTopByPatientIdOrderByDateConsultationDesc(Long patientId);
-
-    // Compter le nombre de consultations par patient
+    // ---- Statistiques ----
+    long countByDate(LocalDate date);
     long countByPatientId(Long patientId);
+    Double sumPrixByDate(LocalDate date);
+    Double sumPrixByPatientId(Long patientId);
 
-    // Compter le nombre de consultations par médecin
-    long countByMedecinId(Long medecinId);
+    // ---- Relations avec InterventionMedecin ----
+    List<InterventionMedecin> getInterventionsOfConsultation(Long consultationId);
+    void addInterventionToConsultation(Long consultationId, Long interventionId);
+    void removeInterventionFromConsultation(Long consultationId, Long interventionId);
 
-    // Vérifier si une consultation existe pour un patient à une date donnée
-    boolean existsByPatientIdAndDateConsultation(Long patientId, String dateConsultation);
-
-    // Recherche des consultations avec factures (relation Consultation-Facture)
-    List<Consultation> findByFactureIsNotNull();
+    // ---- Relations avec Prescription ----
+    List<Prescription> getPrescriptionsOfConsultation(Long consultationId);
+    void addPrescriptionToConsultation(Long consultationId, Long prescriptionId);
+    void removePrescriptionFromConsultation(Long consultationId, Long prescriptionId);
 }

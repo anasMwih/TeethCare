@@ -57,7 +57,7 @@ public class PatientRepositoryImpl implements PatientRepository {
                 .sexe(Sexe.Homme).assurance(Assurance.Aucune)
                 .build());
 
-        data.sort(Comparator.comparing(Patient::getId));
+       data.sort(Comparator.comparing(Patient::getId));
     }
 
     @Override

@@ -1,45 +1,43 @@
-package ma.dentalTech.repository.modules.dossierMedical.api;
+package ma.teethcare.repository.modules.ordonnance.api;
 
-import ma.dentalTech.entities.Ordonnance;
-import ma.dentalTech.entities.Consultation;
-import ma.dentalTech.entities.Patient;
-import ma.dentalTech.entities.Medicament;
-import ma.dentalTech.repository.common.CrudRepository;
+import ma.teethcare.entities.Consultation;
+import ma.teethcare.entities.Ordonnance;
+import ma.teethcare.entities.Prescription;
+import ma.teethcare.repository.common.CrudRepository;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public interface OrdonnanceRepository extends CrudRepository<Ordonnance, Long> {
 
-    // Recherche des ordonnances par consultation (relation Ordonnance-Consultation)
     List<Ordonnance> findByConsultation(Consultation consultation);
-
-    // Recherche des ordonnances par consultation ID
     List<Ordonnance> findByConsultationId(Long consultationId);
 
-    // Recherche des ordonnances par patient (relation Ordonnance-Patient)
-    List<Ordonnance> findByPatient(Patient patient);
+    List<Ordonnance> findByDate(LocalDate date);
+    List<Ordonnance> findByDateBetween(LocalDate start, LocalDate end);
 
-    // Recherche des ordonnances par patient ID
-    List<Ordonnance> findByPatientId(Long patientId);
+    List<Ordonnance> findByInstructionsContaining(String keyword);
 
-    // Recherche des ordonnances par médecin
-    List<Ordonnance> findByMedecinId(Long medecinId);
-
-    // Recherche des ordonnances par date
-    List<Ordonnance> findByDateOrdonnance(String date);
-
-    // Recherche des ordonnances contenant un médicament spécifique
-    List<Ordonnance> findByMedicamentsContaining(Medicament medicament);
-
-    // Ordonnance la plus récente d'un patient
-    Optional<Ordonnance> findTopByPatientIdOrderByDateOrdonnanceDesc(Long patientId);
-
-    // Compter le nombre d'ordonnances par patient
-    long countByPatientId(Long patientId);
-
-    // Compter le nombre d'ordonnances par médecin
-    long countByMedecinId(Long medecinId);
-
-    // Vérifier si une ordonnance existe pour une consultation
+    boolean existsById(Long id);
     boolean existsByConsultationId(Long consultationId);
+
+    long count();
+    long countByConsultationId(Long consultationId);
+    long countByDate(LocalDate date);
+
+    List<Ordonnance> findPage(int limit, int offset);
+
+    // ---- Statistiques ----
+    long countOrdonnancesByMonth(int year, int month);
+
+    // ---- Relations avec Prescription ----
+    List<Prescription> getPrescriptionsOfOrdonnance(Long ordonnanceId);
+    void addPrescriptionToOrdonnance(Long ordonnanceId, Long prescriptionId);
+    void removePrescriptionFromOrdonnance(Long ordonnanceId, Long prescriptionId);
+    void removeAllPrescriptionsFromOrdonnance(Long ordonnanceId);
+
+    // ---- Recherche avancée ----
+    List<Ordonnance> searchByConsultationPatient(String patientNom);
+    List<Ordonnance> findRecentOrdonnances(int days);
 }
