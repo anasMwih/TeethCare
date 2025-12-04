@@ -1,6 +1,9 @@
 package ma.teethcare.entities;
 
 import lombok.*;
+import ma.teethcare.entities.enums.Sexe;
+import ma.teethcare.entities.enums.TypeUtilisateur;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,17 +15,29 @@ public class Utilisateur {
     private Long idUser;
     private String nom;
     private String email;
-    private Adresse adresse;
+    private String adresse;
     private String cin;
-    private String tél;
+    private String telephone;
     private String login;
     private String motDePass;
-    private Enum sexe;
+    private Sexe sexe;
     private LocalDate lastLoginDate;
     private LocalDate dateNaissance;
 
-    // Utilisateur a plusieurs rôles et notifications
+    // Attributs pour Staff
+    private Double salaire;
+    private Double prime;
+    private LocalDate dateRecrutement;
+    private Integer soldeConge;
+
+    private TypeUtilisateur type;
+    private String specialite; // Pour médecin
+    private String numCNSS; // Pour secrétaire
+    private Double commission; // Pour secrétaire
+
+    // Relations
+    private CabinetMedicale cabinetMedicale;
     private List<Role> roles;
     private List<Notification> notifications;
-
+    private AgendaMensuel agendaMensuel; // Pour médecin
 }
