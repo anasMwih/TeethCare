@@ -3,10 +3,16 @@ package ma.teethcare.repository.common;
 import java.util.List;
 
 public interface CrudRepository<T, ID> {
+
     List<T> findAll();
+
     T findById(ID id);
-    void create(T newElement);
-    void update(T newValuesElement);
-    void delete(T element);
+
+    void create(T patient);
+
+    void update(T patient);
+
+    void delete(T patient);
+
     void deleteById(ID id);
 }

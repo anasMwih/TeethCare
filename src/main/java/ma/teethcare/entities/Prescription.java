@@ -1,64 +1,39 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
-import javax.persistence.*;
-import java.util.Objects;
-
-@Entity
-@Table(name = "prescription")
 public class Prescription {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPrescription;
+    private Long id;
+    private Integer quantite;
+    private String posologie; // Comment prendre le médicament
+    private Integer dureeTraitement; // en jours
 
-    @Column(name = "quantite")
-    private Integer quantité;
-
-    @Column(name = "frequence")
-    private String fréquence;
-
-    @Column(name = "duree_jours")
-    private Integer duréeEnJours;
+    // Relations
+    private Ordonnance ordonnance;
+    private Medicament medicament;
 
     public Prescription() {}
 
-    public Prescription(Integer quantité, String fréquence, Integer duréeEnJours) {
-        this.quantité = quantité;
-        this.fréquence = fréquence;
-        this.duréeEnJours = duréeEnJours;
+    public Prescription(Ordonnance ordonnance, Medicament medicament, Integer quantite) {
+        this.ordonnance = ordonnance;
+        this.medicament = medicament;
+        this.quantite = quantite;
     }
 
-    public Long getIdPrescription() { return idPrescription; }
-    public void setIdPrescription(Long idPrescription) { this.idPrescription = idPrescription; }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Integer getQuantité() { return quantité; }
-    public void setQuantité(Integer quantité) { this.quantité = quantité; }
+    public Integer getQuantite() { return quantite; }
+    public void setQuantite(Integer quantite) { this.quantite = quantite; }
 
-    public String getFréquence() { return fréquence; }
-    public void setFréquence(String fréquence) { this.fréquence = fréquence; }
+    public String getPosologie() { return posologie; }
+    public void setPosologie(String posologie) { this.posologie = posologie; }
 
-    public Integer getDuréeEnJours() { return duréeEnJours; }
-    public void setDuréeEnJours(Integer duréeEnJours) { this.duréeEnJours = duréeEnJours; }
+    public Integer getDureeTraitement() { return dureeTraitement; }
+    public void setDureeTraitement(Integer dureeTraitement) { this.dureeTraitement = dureeTraitement; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Prescription that = (Prescription) o;
-        return Objects.equals(idPrescription, that.idPrescription);
-    }
+    public Ordonnance getOrdonnance() { return ordonnance; }
+    public void setOrdonnance(Ordonnance ordonnance) { this.ordonnance = ordonnance; }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idPrescription);
-    }
-
-    @Override
-    public String toString() {
-        return "Prescription{" +
-                "idPrescription=" + idPrescription +
-                ", quantité=" + quantité +
-                ", fréquence='" + fréquence + '\'' +
-                ", duréeEnJours=" + duréeEnJours +
-                '}';
-    }
+    public Medicament getMedicament() { return medicament; }
+    public void setMedicament(Medicament medicament) { this.medicament = medicament; }
 }

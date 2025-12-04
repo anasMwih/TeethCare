@@ -1,73 +1,45 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
 
-@Entity
-@Table(name = "certificat")
 public class Certificat {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCertificat;
+    private Long id;
+    private LocalDate dateEmission;
+    private LocalDate dateExpiration;
+    private String type;
+    private String description;
 
-    @Column(name = "date_debut")
-    private LocalDate dateDebut;
-
-    @Column(name = "date_fin")
-    private LocalDate dateFin;
-
-    @Column(name = "duree")
-    private Integer durée;
-
-    @Column(name = "note_medecin", length = 1000)
-    private String noteMedecin;
+    // Relations
+    private DossierMedical dossierMedical;
+    private Consultation consultation;
 
     public Certificat() {}
 
-    public Certificat(LocalDate dateDebut, LocalDate dateFin, Integer durée, String noteMedecin) {
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
-        this.durée = durée;
-        this.noteMedecin = noteMedecin;
+    public Certificat(DossierMedical dossierMedical, String type, LocalDate dateEmission) {
+        this.dossierMedical = dossierMedical;
+        this.type = type;
+        this.dateEmission = dateEmission;
     }
 
-    public Long getIdCertificat() { return idCertificat; }
-    public void setIdCertificat(Long idCertificat) { this.idCertificat = idCertificat; }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public LocalDate getDateDebut() { return dateDebut; }
-    public void setDateDebut(LocalDate dateDebut) { this.dateDebut = dateDebut; }
+    public LocalDate getDateEmission() { return dateEmission; }
+    public void setDateEmission(LocalDate dateEmission) { this.dateEmission = dateEmission; }
 
-    public LocalDate getDateFin() { return dateFin; }
-    public void setDateFin(LocalDate dateFin) { this.dateFin = dateFin; }
+    public LocalDate getDateExpiration() { return dateExpiration; }
+    public void setDateExpiration(LocalDate dateExpiration) { this.dateExpiration = dateExpiration; }
 
-    public Integer getDurée() { return durée; }
-    public void setDurée(Integer durée) { this.durée = durée; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 
-    public String getNoteMedecin() { return noteMedecin; }
-    public void setNoteMedecin(String noteMedecin) { this.noteMedecin = noteMedecin; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Certificat that = (Certificat) o;
-        return Objects.equals(idCertificat, that.idCertificat);
-    }
+    public DossierMedical getDossierMedical() { return dossierMedical; }
+    public void setDossierMedical(DossierMedical dossierMedical) { this.dossierMedical = dossierMedical; }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idCertificat);
-    }
-
-    @Override
-    public String toString() {
-        return "Certificat{" +
-                "idCertificat=" + idCertificat +
-                ", dateDebut=" + dateDebut +
-                ", dateFin=" + dateFin +
-                ", durée=" + durée +
-                ", noteMedecin='" + noteMedecin + '\'' +
-                '}';
-    }
+    public Consultation getConsultation() { return consultation; }
+    public void setConsultation(Consultation consultation) { this.consultation = consultation; }
 }

@@ -1,66 +1,62 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.List;
 
-@Entity
-@Table(name = "consultation")
 public class Consultation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idConsultation;
-
-    @Column(name = "date_consultation")
+    private Long id;
     private LocalDate date;
+    private String symptomes;
+    private String diagnostic;
+    private String traitement;
+    private Double prix;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "statut")
-    private StatutConsultation statut;
-
-    @Column(name = "observation_medecin", length = 1000)
-    private String observationMedecin;
+    // Relations
+    private Patient patient;
+    private DossierMedical dossierMedical;
+    private List<InterventionMedecin> interventions;
+    private List<Prescription> prescriptions;
+    private Facture facture;
 
     public Consultation() {}
 
-    public Consultation(LocalDate date, StatutConsultation statut, String observationMedecin) {
+    public Consultation(Patient patient, LocalDate date, String symptomes) {
+        this.patient = patient;
         this.date = date;
-        this.statut = statut;
-        this.observationMedecin = observationMedecin;
+        this.symptomes = symptomes;
     }
 
-    public Long getIdConsultation() { return idConsultation; }
-    public void setIdConsultation(Long idConsultation) { this.idConsultation = idConsultation; }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) { this.date = date; }
 
-    public StatutConsultation getStatut() { return statut; }
-    public void setStatut(StatutConsultation statut) { this.statut = statut; }
+    public String getSymptomes() { return symptomes; }
+    public void setSymptomes(String symptomes) { this.symptomes = symptomes; }
 
-    public String getObservationMedecin() { return observationMedecin; }
-    public void setObservationMedecin(String observationMedecin) { this.observationMedecin = observationMedecin; }
+    public String getDiagnostic() { return diagnostic; }
+    public void setDiagnostic(String diagnostic) { this.diagnostic = diagnostic; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Consultation that = (Consultation) o;
-        return Objects.equals(idConsultation, that.idConsultation);
-    }
+    public String getTraitement() { return traitement; }
+    public void setTraitement(String traitement) { this.traitement = traitement; }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idConsultation);
-    }
+    public Double getPrix() { return prix; }
+    public void setPrix(Double prix) { this.prix = prix; }
 
-    @Override
-    public String toString() {
-        return "Consultation{" +
-                "idConsultation=" + idConsultation +
-                ", date=" + date +
-                ", statut=" + statut +
-                ", observationMedecin='" + observationMedecin + '\'' +
-                '}';
-    }
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
+
+    public DossierMedical getDossierMedical() { return dossierMedical; }
+    public void setDossierMedical(DossierMedical dossierMedical) { this.dossierMedical = dossierMedical; }
+
+    public List<InterventionMedecin> getInterventions() { return interventions; }
+    public void setInterventions(List<InterventionMedecin> interventions) { this.interventions = interventions; }
+
+    public List<Prescription> getPrescriptions() { return prescriptions; }
+    public void setPrescriptions(List<Prescription> prescriptions) { this.prescriptions = prescriptions; }
+
+    public Facture getFacture() { return facture; }
+    public void setFacture(Facture facture) { this.facture = facture; }
 }

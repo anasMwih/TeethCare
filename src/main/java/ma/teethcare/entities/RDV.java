@@ -1,83 +1,46 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Objects;
+import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "rdv")
 public class RDV {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idRdv;
+    private Long id;
+    private LocalDateTime dateRdv;
+    private String statut; // PLANIFIE, CONFIRME, ANNULE, TERMINE
+    private String notes;
+    private String typeConsultation;
 
-    @Column(name = "date_rdv")
-    private LocalDate date;
-
-    @Column(name = "heure_rdv")
-    private LocalTime heure;
-
-    @Column(name = "motif")
-    private String motif;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "statut")
-    private StatutRdv statut;
-
-    @Column(name = "note_medecin", length = 1000)
-    private String noteMedecin;
+    // Relations
+    private Patient patient;
+    private Medecin medecin;
 
     public RDV() {}
 
-    public RDV(LocalDate date, LocalTime heure, String motif, StatutRdv statut, String noteMedecin) {
-        this.date = date;
-        this.heure = heure;
-        this.motif = motif;
-        this.statut = statut;
-        this.noteMedecin = noteMedecin;
+    public RDV(Patient patient, Medecin medecin, LocalDateTime dateRdv) {
+        this.patient = patient;
+        this.medecin = medecin;
+        this.dateRdv = dateRdv;
+        this.statut = "PLANIFIE";
     }
 
-    public Long getIdRdv() { return idRdv; }
-    public void setIdRdv(Long idRdv) { this.idRdv = idRdv; }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public LocalDate getDate() { return date; }
-    public void setDate(LocalDate date) { this.date = date; }
+    public LocalDateTime getDateRdv() { return dateRdv; }
+    public void setDateRdv(LocalDateTime dateRdv) { this.dateRdv = dateRdv; }
 
-    public LocalTime getHeure() { return heure; }
-    public void setHeure(LocalTime heure) { this.heure = heure; }
+    public String getStatut() { return statut; }
+    public void setStatut(String statut) { this.statut = statut; }
 
-    public String getMotif() { return motif; }
-    public void setMotif(String motif) { this.motif = motif; }
+    public String getNotes() { return notes; }
+    public void setNotes(String notes) { this.notes = notes; }
 
-    public StatutRdv getStatut() { return statut; }
-    public void setStatut(StatutRdv statut) { this.statut = statut; }
+    public String getTypeConsultation() { return typeConsultation; }
+    public void setTypeConsultation(String typeConsultation) { this.typeConsultation = typeConsultation; }
 
-    public String getNoteMedecin() { return noteMedecin; }
-    public void setNoteMedecin(String noteMedecin) { this.noteMedecin = noteMedecin; }
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RDV rdv = (RDV) o;
-        return Objects.equals(idRdv, rdv.idRdv);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idRdv);
-    }
-
-    @Override
-    public String toString() {
-        return "RDV{" +
-                "idRdv=" + idRdv +
-                ", date=" + date +
-                ", heure=" + heure +
-                ", motif='" + motif + '\'' +
-                ", statut=" + statut +
-                ", noteMedecin='" + noteMedecin + '\'' +
-                '}';
-    }
+    public Medecin getMedecin() { return medecin; }
+    public void setMedecin(Medecin medecin) { this.medecin = medecin; }
 }

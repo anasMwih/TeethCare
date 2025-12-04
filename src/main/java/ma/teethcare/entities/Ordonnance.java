@@ -1,57 +1,37 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.List;
 
-@Entity
-@Table(name = "ordonnance")
 public class Ordonnance {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idOrdonnance;
+    private Long id;
+    private LocalDate date;
+    private String instructions;
 
-    @Column(name = "date_ordonnance")
-    private LocalDate dateOrdonnance;
-
-    @Column(name = "description", length = 1000)
-    private String description;
+    // Relations
+    private Consultation consultation;
+    private List<Prescription> prescriptions;
 
     public Ordonnance() {}
 
-    public Ordonnance(LocalDate dateOrdonnance, String description) {
-        this.dateOrdonnance = dateOrdonnance;
-        this.description = description;
+    public Ordonnance(Consultation consultation, LocalDate date) {
+        this.consultation = consultation;
+        this.date = date;
     }
 
-    public Long getIdOrdonnance() { return idOrdonnance; }
-    public void setIdOrdonnance(Long idOrdonnance) { this.idOrdonnance = idOrdonnance; }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public LocalDate getDateOrdonnance() { return dateOrdonnance; }
-    public void setDateOrdonnance(LocalDate dateOrdonnance) { this.dateOrdonnance = dateOrdonnance; }
+    public LocalDate getDate() { return date; }
+    public void setDate(LocalDate date) { this.date = date; }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getInstructions() { return instructions; }
+    public void setInstructions(String instructions) { this.instructions = instructions; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ordonnance that = (Ordonnance) o;
-        return Objects.equals(idOrdonnance, that.idOrdonnance);
-    }
+    public Consultation getConsultation() { return consultation; }
+    public void setConsultation(Consultation consultation) { this.consultation = consultation; }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idOrdonnance);
-    }
-
-    @Override
-    public String toString() {
-        return "Ordonnance{" +
-                "idOrdonnance=" + idOrdonnance +
-                ", dateOrdonnance=" + dateOrdonnance +
-                ", description='" + description + '\'' +
-                '}';
-    }
+    public List<Prescription> getPrescriptions() { return prescriptions; }
+    public void setPrescriptions(List<Prescription> prescriptions) { this.prescriptions = prescriptions; }
 }

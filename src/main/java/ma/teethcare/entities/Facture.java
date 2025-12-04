@@ -1,82 +1,55 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-@Entity
-@Table(name = "facture")
 public class Facture {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idFacture;
-
-    @Column(name = "totale_facture")
-    private Double totaleFacture;
-
-    @Column(name = "totale_paye")
-    private Double totalePayé;
-
-    @Column(name = "reste")
-    private Double reste;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "statut")
-    private StatutFacture statut;
-
-    @Column(name = "date_facture")
+    private Long id;
+    private Double montantTotal;
+    private Double montantPaye;
+    private Double resteAPayer;
+    private String statut; // PAYÉ, EN_ATTENTE, ANNULE
     private LocalDateTime dateFacture;
+    private String numeroFacture;
+
+    // Relations
+    private Consultation consultation;
+    private Patient patient;
 
     public Facture() {}
 
-    public Facture(Double totaleFacture, Double totalePayé, Double reste, StatutFacture statut, LocalDateTime dateFacture) {
-        this.totaleFacture = totaleFacture;
-        this.totalePayé = totalePayé;
-        this.reste = reste;
-        this.statut = statut;
+    public Facture(Consultation consultation, Double montantTotal, LocalDateTime dateFacture) {
+        this.consultation = consultation;
+        this.montantTotal = montantTotal;
         this.dateFacture = dateFacture;
+        this.resteAPayer = montantTotal;
+        this.statut = "EN_ATTENTE";
     }
 
-    public Long getIdFacture() { return idFacture; }
-    public void setIdFacture(Long idFacture) { this.idFacture = idFacture; }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Double getTotaleFacture() { return totaleFacture; }
-    public void setTotaleFacture(Double totaleFacture) { this.totaleFacture = totaleFacture; }
+    public Double getMontantTotal() { return montantTotal; }
+    public void setMontantTotal(Double montantTotal) { this.montantTotal = montantTotal; }
 
-    public Double getTotalePayé() { return totalePayé; }
-    public void setTotalePayé(Double totalePayé) { this.totalePayé = totalePayé; }
+    public Double getMontantPaye() { return montantPaye; }
+    public void setMontantPaye(Double montantPaye) { this.montantPaye = montantPaye; }
 
-    public Double getReste() { return reste; }
-    public void setReste(Double reste) { this.reste = reste; }
+    public Double getResteAPayer() { return resteAPayer; }
+    public void setResteAPayer(Double resteAPayer) { this.resteAPayer = resteAPayer; }
 
-    public StatutFacture getStatut() { return statut; }
-    public void setStatut(StatutFacture statut) { this.statut = statut; }
+    public String getStatut() { return statut; }
+    public void setStatut(String statut) { this.statut = statut; }
 
     public LocalDateTime getDateFacture() { return dateFacture; }
     public void setDateFacture(LocalDateTime dateFacture) { this.dateFacture = dateFacture; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Facture facture = (Facture) o;
-        return Objects.equals(idFacture, facture.idFacture);
-    }
+    public String getNumeroFacture() { return numeroFacture; }
+    public void setNumeroFacture(String numeroFacture) { this.numeroFacture = numeroFacture; }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idFacture);
-    }
+    public Consultation getConsultation() { return consultation; }
+    public void setConsultation(Consultation consultation) { this.consultation = consultation; }
 
-    @Override
-    public String toString() {
-        return "Facture{" +
-                "idFacture=" + idFacture +
-                ", totaleFacture=" + totaleFacture +
-                ", totalePayé=" + totalePayé +
-                ", reste=" + reste +
-                ", statut=" + statut +
-                ", dateFacture=" + dateFacture +
-                '}';
-    }
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
 }

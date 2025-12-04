@@ -1,53 +1,72 @@
 package ma.teethcare.entities;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
-public class Patient extends BaseEntity {
-    private Long idPatient;
+public class Patient {
+    private Long id;
     private String nom;
     private String prenom;
     private LocalDate dateNaissance;
-    private String cin;
-    private String adresse;
+    private String sexe;
     private String telephone;
     private String email;
-    private AssuranceType assurance;
-    private CaseType caseType;
+    private String adresse;
+    private String assurance;
 
-    // Relations (seront implémentées plus tard)
-    private List<DossierMedical> dossiersMedicaux = new ArrayList<>();
-    private List<RendezVous> rendezVous = new ArrayList<>();
-    private List<Facture> factures = new ArrayList<>();
+    // Relations
+    private List<DossierMedical> dossiersMedicaux;
+    private List<Consultation> consultations;
+    private List<RDV> rendezVous;
+    private Antecedents antecedents;
 
-    public enum AssuranceType {
-        CNSS, CNOPS, RAMED, PRIVEE, AUCUNE
-    }
+    // Constructeurs, getters, setters
+    public Patient() {}
 
-    public enum CaseType {
-        NOUVEAU, SUIVI, URGENCE, CHRONIQUE
-    }
-
-    // Constructeur pratique
-    public Patient(String nom, String prenom, String cin, String telephone) {
+    public Patient(String nom, String prenom, LocalDate dateNaissance, String telephone) {
         this.nom = nom;
         this.prenom = prenom;
-        this.cin = cin;
+        this.dateNaissance = dateNaissance;
         this.telephone = telephone;
-        this.caseType = CaseType.NOUVEAU;
     }
 
-    public Patient() {
-        // Constructeur par défaut
-    }
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    // Méthode utilitaire
-    public String getNomComplet() {
-        return nom + " " + prenom;
-    }
+    public String getNom() { return nom; }
+    public void setNom(String nom) { this.nom = nom; }
+
+    public String getPrenom() { return prenom; }
+    public void setPrenom(String prenom) { this.prenom = prenom; }
+
+    public LocalDate getDateNaissance() { return dateNaissance; }
+    public void setDateNaissance(LocalDate dateNaissance) { this.dateNaissance = dateNaissance; }
+
+    public String getSexe() { return sexe; }
+    public void setSexe(String sexe) { this.sexe = sexe; }
+
+    public String getTelephone() { return telephone; }
+    public void setTelephone(String telephone) { this.telephone = telephone; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getAdresse() { return adresse; }
+    public void setAdresse(String adresse) { this.adresse = adresse; }
+
+    public String getAssurance() { return assurance; }
+    public void setAssurance(String assurance) { this.assurance = assurance; }
+
+    public List<DossierMedical> getDossiersMedicaux() { return dossiersMedicaux; }
+    public void setDossiersMedicaux(List<DossierMedical> dossiersMedicaux) { this.dossiersMedicaux = dossiersMedicaux; }
+
+    public List<Consultation> getConsultations() { return consultations; }
+    public void setConsultations(List<Consultation> consultations) { this.consultations = consultations; }
+
+    public List<RDV> getRendezVous() { return rendezVous; }
+    public void setRendezVous(List<RDV> rendezVous) { this.rendezVous = rendezVous; }
+
+    public Antecedents getAntecedents() { return antecedents; }
+    public void setAntecedents(Antecedents antecedents) { this.antecedents = antecedents; }
 }
