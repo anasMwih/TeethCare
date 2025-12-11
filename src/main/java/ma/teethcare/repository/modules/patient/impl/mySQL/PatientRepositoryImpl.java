@@ -1,10 +1,10 @@
-package ma.dentalTech.repository.modules.patient.impl.mySQL;
+package ma.teethCare.repository.modules.patient.impl.mySQL;
 
-import ma.dentalTech.entities.patient.Antecedent;
-import ma.dentalTech.entities.patient.Patient;
-import ma.dentalTech.conf.SessionFactory;
-import ma.dentalTech.repository.common.RowMappers;
-import ma.dentalTech.repository.modules.patient.api.PatientRepository;
+import ma.teethCare.entities.patient.Antecedent;
+import ma.teethCare.entities.patient.Patient;
+import ma.teethCare.conf.SessionFactory;
+import ma.teethCare.repository.common.RowMappers;
+import ma.teethCare.repository.modules.patient.api.PatientRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -58,6 +58,7 @@ public class PatientRepositoryImpl implements PatientRepository {
             ps.setString(8, p.getSexe().name());
             ps.setString(9, p.getAssurance().name());
             ps.executeUpdate();
+
             try (ResultSet keys = ps.getGeneratedKeys()) {
                 if (keys.next()) p.setId(keys.getLong(1));
             }
@@ -144,7 +145,8 @@ public class PatientRepositoryImpl implements PatientRepository {
         return out;
     }
 
-    @Override public boolean existsById(Long id) {
+    @Override
+    public boolean existsById(Long id) {
         String sql = "SELECT 1 FROM Patients WHERE id = ?";
         try (Connection c = SessionFactory.getInstance().getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -153,7 +155,8 @@ public class PatientRepositoryImpl implements PatientRepository {
         } catch (SQLException e) { throw new RuntimeException(e); }
     }
 
-    @Override public long count() {
+    @Override
+    public long count() {
         String sql = "SELECT COUNT(*) FROM Patients";
         try (Connection c = SessionFactory.getInstance().getConnection();
              PreparedStatement ps = c.prepareStatement(sql);

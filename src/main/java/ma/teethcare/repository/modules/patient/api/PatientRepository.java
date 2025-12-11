@@ -1,140 +1,168 @@
-package ma.dentalTech.repository.modules.patient.impl.memoryBase;
+package ma.teethcare.entities;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import ma.dentalTech.entities.enums.Assurance;
-import ma.dentalTech.entities.enums.Sexe;
-import ma.dentalTech.entities.patient.Antecedent;
-import ma.dentalTech.entities.patient.Patient;
-import ma.dentalTech.repository.modules.patient.api.PatientRepository;
 
+public class Patient {
+    private Long id;
+    private String nom;
+    private String prenom;
+    private LocalDate dateNaissance;
+    private Genre sexe;
+    private String telephone;
+    private String email;
+    private String adresse;
+    private String assurance;
+    private String groupeSanguin;
+    private String profession;
+    private LocalDate dateCreation;
+    private LocalDate dateMiseAJour;
 
-public class PatientRepositoryImpl implements PatientRepository {
+    // Relations
+    private DossierMedical dossierMedical;
+    private List<Consultation> consultations = new ArrayList<>();
+    private List<RendezVous> rendezVous = new ArrayList<>();
+    private List<Antecedent> antecedents = new ArrayList<>();
 
+    // Enum Genre
+    public enum Genre {
+        MASCULIN("M"),
+        FEMININ("F"),
+        AUTRE("OTHER");
 
-    private final List<Patient> data = new ArrayList<Patient>();
+        private final String code;
 
-    public PatientRepositoryImpl() {
+        Genre(String code) {
+            this.code = code;
+        }
 
+        public String getCode() {
+            return code;
+        }
 
+        public static Genre fromCode(String code) {
+            for (Genre genre : values()) {
+                if (genre.code.equals(code)) {
+                    return genre;
+                }
+            }
+            return AUTRE;
+        }
+    }
 
+    // Constructeurs
+    public Patient() {
+        this.dateCreation = LocalDate.now();
+        this.dateMiseAJour = LocalDate.now();
+    }
 
-        // Données d'exemple : 3 patients d'aujourd'hui, 1 d'hier
-        LocalDateTime now = LocalDateTime.now();
-        data.add(Patient.builder()
-                .id(1L).nom("Amal").prenom("Z.")
-                .email("amal@example.com").telephone("0611-111111")
-                .dateNaissance(LocalDate.of(1995, 5, 12))
-                .dateCreation(now.minusMinutes(5))
-                .sexe(Sexe.Femme).assurance(Assurance.CNSS)
-                .build());
+    public Patient(String nom, String prenom, LocalDate dateNaissance, String telephone, Genre sexe) {
+        this();
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.telephone = telephone;
+        this.sexe = sexe;
+    }
 
-        data.add(Patient.builder()
-                .id(2L).nom("Hassan").prenom("B.")
-                .email("hassan@example.com").telephone("0622-222222")
-                .dateNaissance(LocalDate.of(1989, 9, 23))
-                .dateCreation(now.minusHours(1))
-                .sexe(Sexe.Homme).assurance(Assurance.CNOPS)
-                .build());
+    // Constructeur complet
+    public Patient(String nom, String prenom, LocalDate dateNaissance, Genre sexe,
+                   String telephone, String email, String adresse, String assurance) {
+        this(nom, prenom, dateNaissance, telephone, sexe);
+        this.email = email;
+        this.adresse = adresse;
+        this.assurance = assurance;
+    }
 
-        data.add(Patient.builder()
-                .id(3L).nom("Nour").prenom("C.")
-                .email("nour@example.com").telephone("0633-333333")
-                .dateNaissance(LocalDate.of(2000, 2, 2))
-                .dateCreation(now.minusMinutes(30))
-                .sexe(Sexe.Femme).assurance(Assurance.Autre)
-                .build());
+    // Getters et Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-        data.add(Patient.builder()
-                .id(4L).nom("Youssef").prenom("D.")
-                .email("youssef@example.com").telephone("0644-444444")
-                .dateNaissance(LocalDate.of(1992, 11, 1))
-                .dateCreation(now.minusDays(1)) // hier → ne doit pas s'afficher
-                .sexe(Sexe.Homme).assurance(Assurance.Aucune)
-                .build());
+    public String getNom() { return nom; }
+    public void setNom(String nom) { this.nom = nom; }
 
-        data.sort(Comparator.comparing(Patient::getId));
+    public String getPrenom() { return prenom; }
+    public void setPrenom(String prenom) { this.prenom = prenom; }
+
+    public LocalDate getDateNaissance() { return dateNaissance; }
+    public void setDateNaissance(LocalDate dateNaissance) { this.dateNaissance = dateNaissance; }
+
+    public Genre getSexe() { return sexe; }
+    public void setSexe(Genre sexe) { this.sexe = sexe; }
+
+    public String getTelephone() { return telephone; }
+    public void setTelephone(String telephone) { this.telephone = telephone; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getAdresse() { return adresse; }
+    public void setAdresse(String adresse) { this.adresse = adresse; }
+
+    public String getAssurance() { return assurance; }
+    public void setAssurance(String assurance) { this.assurance = assurance; }
+
+    public String getGroupeSanguin() { return groupeSanguin; }
+    public void setGroupeSanguin(String groupeSanguin) { this.groupeSanguin = groupeSanguin; }
+
+    public String getProfession() { return profession; }
+    public void setProfession(String profession) { this.profession = profession; }
+
+    public LocalDate getDateCreation() { return dateCreation; }
+    public void setDateCreation(LocalDate dateCreation) { this.dateCreation = dateCreation; }
+
+    public LocalDate getDateMiseAJour() { return dateMiseAJour; }
+    public void setDateMiseAJour(LocalDate dateMiseAJour) { this.dateMiseAJour = dateMiseAJour; }
+
+    // Getters et Setters pour les relations
+    public DossierMedical getDossierMedical() { return dossierMedical; }
+    public void setDossierMedical(DossierMedical dossierMedical) { this.dossierMedical = dossierMedical; }
+
+    public List<Consultation> getConsultations() { return consultations; }
+    public void setConsultations(List<Consultation> consultations) { this.consultations = consultations; }
+
+    public List<RendezVous> getRendezVous() { return rendezVous; }
+    public void setRendezVous(List<RendezVous> rendezVous) { this.rendezVous = rendezVous; }
+
+    public List<Antecedent> getAntecedents() { return antecedents; }
+    public void setAntecedents(List<Antecedent> antecedents) { this.antecedents = antecedents; }
+
+    // Méthodes utilitaires
+    public void addConsultation(Consultation consultation) {
+        this.consultations.add(consultation);
+        consultation.setPatient(this);
+    }
+
+    public void addRendezVous(RendezVous rdv) {
+        this.rendezVous.add(rdv);
+        rdv.setPatient(this);
+    }
+
+    public void addAntecedent(Antecedent antecedent) {
+        this.antecedents.add(antecedent);
+        antecedent.setPatient(this);
+    }
+
+    public String getNomComplet() {
+        return prenom + " " + nom;
+    }
+
+    public int getAge() {
+        if (dateNaissance == null) return 0;
+        return LocalDate.now().getYear() - dateNaissance.getYear();
     }
 
     @Override
-    public List<Patient> findAll() { return List.copyOf(data); }
-
-    @Override
-    public Patient findById(Long id) {
-        return findAll().stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
-    }
-
-    @Override
-    public void create(Patient patient) { data.add(patient); }
-
-    @Override
-    public void update(Patient patient) {
-        deleteById(patient.getId());
-        data.add(patient);
-    }
-
-    @Override
-    public void delete(Patient patient) { data.removeIf(p -> p.getId().equals(patient.getId())); }
-
-    @Override
-    public void deleteById(Long id) { data.removeIf(p -> p.getId().equals(id)); }
-
-    @Override
-    public Optional<Patient> findByEmail(String email) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Patient> findByTelephone(String telephone) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<Patient> searchByNomPrenom(String keyword) {
-        return List.of();
-    }
-
-    @Override
-    public boolean existsById(Long id) {
-        return false;
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public List<Patient> findPage(int limit, int offset) {
-        return List.of();
-    }
-
-    @Override
-    public void addAntecedentToPatient(Long patientId, Long antecedentId) {
-
-    }
-
-    @Override
-    public void removeAntecedentFromPatient(Long patientId, Long antecedentId) {
-
-    }
-
-    @Override
-    public void removeAllAntecedentsFromPatient(Long patientId) {
-
-    }
-
-    @Override
-    public List<Antecedent> getAntecedentsOfPatient(Long patientId) {
-        return List.of();
-    }
-
-    @Override
-    public List<Patient> getPatientsByAntecedent(Long antecedentId) {
-        return List.of();
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", dateNaissance=" + dateNaissance +
+                ", sexe=" + sexe +
+                ", telephone='" + telephone + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

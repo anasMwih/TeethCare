@@ -1,11 +1,11 @@
-package ma.dentalTech.repository.modules.patient.impl.mySQL;
+package ma.teethCare.repository.modules.patient.impl.mySQL;
 
-import ma.dentalTech.entities.patient.Antecedent;
-import ma.dentalTech.entities.patient.Patient;
-import ma.dentalTech.entities.enums.*;
-import ma.dentalTech.conf.SessionFactory;
-import ma.dentalTech.repository.common.RowMappers;
-import ma.dentalTech.repository.modules.patient.api.AntecedentRepository;
+import ma.teethCare.entities.patient.Antecedent;
+import ma.teethCare.entities.patient.Patient;
+import ma.teethCare.entities.enums.*;
+import ma.teethCare.conf.SessionFactory;
+import ma.teethCare.repository.common.RowMappers;
+import ma.teethCare.repository.modules.patient.api.AntecedentRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -123,7 +123,8 @@ public class AntecedentRepositoryImpl implements AntecedentRepository {
         return out;
     }
 
-    @Override public boolean existsById(Long id) {
+    @Override
+    public boolean existsById(Long id) {
         String sql = "SELECT 1 FROM Antecedents WHERE id = ?";
         try (Connection c = SessionFactory.getInstance().getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -132,7 +133,8 @@ public class AntecedentRepositoryImpl implements AntecedentRepository {
         } catch (SQLException e) { throw new RuntimeException(e); }
     }
 
-    @Override public long count() {
+    @Override
+    public long count() {
         String sql = "SELECT COUNT(*) FROM Antecedents";
         try (Connection c = SessionFactory.getInstance().getConnection();
              PreparedStatement ps = c.prepareStatement(sql);

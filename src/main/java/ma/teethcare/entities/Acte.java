@@ -1,4 +1,4 @@
-package com.teethcare.entites;
+package ma.teethcare.entities;
 
 import javax.persistence.*;
 import java.util.Objects;

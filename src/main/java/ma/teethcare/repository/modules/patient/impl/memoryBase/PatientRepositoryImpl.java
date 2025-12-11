@@ -1,4 +1,4 @@
-package ma.dentalTech.repository.modules.patient.impl.memoryBase;
+package ma.teethCare.repository.modules.patient.impl.memoryBase;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -6,22 +6,18 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import ma.dentalTech.entities.enums.Assurance;
-import ma.dentalTech.entities.enums.Sexe;
-import ma.dentalTech.entities.patient.Antecedent;
-import ma.dentalTech.entities.patient.Patient;
-import ma.dentalTech.repository.modules.patient.api.PatientRepository;
 
+import ma.teethCare.entities.enums.Assurance;
+import ma.teethCare.entities.enums.Sexe;
+import ma.teethCare.entities.patient.Antecedent;
+import ma.teethCare.entities.patient.Patient;
+import ma.teethCare.repository.modules.patient.api.PatientRepository;
 
 public class PatientRepositoryImpl implements PatientRepository {
-
 
     private final List<Patient> data = new ArrayList<Patient>();
 
     public PatientRepositoryImpl() {
-
-
-
 
         // Données d'exemple : 3 patients d'aujourd'hui, 1 d'hier
         LocalDateTime now = LocalDateTime.now();
@@ -53,11 +49,11 @@ public class PatientRepositoryImpl implements PatientRepository {
                 .id(4L).nom("Youssef").prenom("D.")
                 .email("youssef@example.com").telephone("0644-444444")
                 .dateNaissance(LocalDate.of(1992, 11, 1))
-                .dateCreation(now.minusDays(1)) // hier → ne doit pas s'afficher
+                .dateCreation(now.minusDays(1))
                 .sexe(Sexe.Homme).assurance(Assurance.Aucune)
                 .build());
 
-       data.sort(Comparator.comparing(Patient::getId));
+        data.sort(Comparator.comparing(Patient::getId));
     }
 
     @Override
